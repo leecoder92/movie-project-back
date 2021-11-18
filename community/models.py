@@ -3,7 +3,7 @@ from django.conf import settings
 
 # Create your models here.
 class Review(models.Model):
-    user = models.ForeignKey()
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     movie_title = models.CharField(max_length=50)
     rank = models.IntegerField()
@@ -12,4 +12,4 @@ class Review(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class Comment(models.Model):
-    content = models.TextField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    content = models.TextField()
