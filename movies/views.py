@@ -11,7 +11,6 @@ from rest_framework.permissions import AllowAny
 @permission_classes([AllowAny])
 def get_movies(request):
     if request.method == 'GET':
-
         movies = Movie.objects.all()
         serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data)
