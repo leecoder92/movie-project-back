@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import Review
+from .models import Article
 
-class ReviewSerializer(serializers.ModelSerializer):
+class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Review
-        fields = ('title', 'movie_title', 'rank', 'content',)
+        model = Article
+        fields = ('id', 'title', 'content',)
