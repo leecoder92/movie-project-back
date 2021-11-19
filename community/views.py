@@ -9,7 +9,7 @@ from .models import Article
 @api_view(['GET', 'POST'])
 def article_create(request):
     if request.method == "GET":
-        articles = request.user.review_set.all()
+        articles = request.user.article_set.all()
         serializer = ArticleSerializer(articles, many=True)
         return Response(serializer.data)
 
@@ -28,9 +28,9 @@ def article_update_delete(request, article_pk):
         return Response({'detail': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
 
     if request.method == 'PUT':
-        serializer = ArticleSerializer(Article, data=request.data)
+        serializer = ArticleSerializer(article, data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(serializer.data)
 
     elif request.method == 'DELETE':
