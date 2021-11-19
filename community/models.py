@@ -12,4 +12,6 @@ class Review(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class Comment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
     content = models.TextField()

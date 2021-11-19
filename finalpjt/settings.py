@@ -154,4 +154,8 @@ REST_FRAMEWORK = {
     ),
 }
 
+<<<<<<< Updated upstream
 CORS_ALLOWED_ALL_ORIGINS= True
+=======
+AUTH_USER_MODEL = 'accounts.User'
+>>>>>>> Stashed changes
