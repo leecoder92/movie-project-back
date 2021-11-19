@@ -154,3 +154,7 @@ REST_FRAMEWORK = {
     ),
 }
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
