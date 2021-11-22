@@ -16,11 +16,11 @@ class Movie(models.Model):
     vote_average = models.FloatField()
     overview = models.TextField()
     poster_path = models.CharField(max_length=200)
-    genres = models.ManyToManyField(Genre)    
+    genres = models.ManyToManyField(Genre)
     def __str__(self):
         return self.title
 
-        
+
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     rank = models.IntegerField()
