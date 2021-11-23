@@ -16,7 +16,7 @@ def get_movies(request):
         serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data)
 
-# ================================================================        
+# ================================================================
 
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
@@ -43,11 +43,27 @@ def delete_reviews(request, detail_id, review_id):
         return Response({'review_id':review_id},status=status.HTTP_204_NO_CONTENT
         )
 
-# ================================================================================
+
 
 @api_view(['GET'])
-def get_my_reviews(request):
-    reviews = request.user.review_set.all()
-    if request.method == "GET":
-        serializer = ReviewSerializer(reviews, many=True)
+def recommend(request):
+    if request.method == 'GET':
+        movies = Movie.objects.all()
+
+        recommend_list = []
+        for movie in movies:
+            review_avg_list = []
+            reviews = Review.objects.filter(movie_id=movie.id).all()
+            for review in reviews:
+                review_avg_list.append(float(review.rank))
+
+            if review_avg_list:
+                review_avg = sum(review_avg_list)/len(review_avg_list)
+            else:
+                review_avg = 0
+
+            if (movie.vote_average >= 6.0 and review_avg>=3.0) and (movie.vote_average<=review_avg*2):
+                recommend_list.append(movie)
+
+        serializer = MovieSerializer(recommend_list,many=True)
         return Response(serializer.data)
