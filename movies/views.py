@@ -1,3 +1,4 @@
+from typing import ItemsView
 from django.shortcuts import get_object_or_404, render
 from django.template import response
 from rest_framework.response import Response
@@ -6,6 +7,7 @@ from .serializers import MovieSerializer,ReviewSerializer
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import AllowAny
+from operator import attrgetter
 
 # Create your views here.
 @api_view(['GET'])
@@ -49,7 +51,6 @@ def delete_reviews(request, detail_id, review_id):
 def recommend(request):
     if request.method == 'GET':
         movies = Movie.objects.all()
-
         recommend_list = []
         for movie in movies:
             review_avg_list = []
@@ -65,5 +66,11 @@ def recommend(request):
             if (movie.vote_average >= 6.0 and review_avg>=3.0) and (movie.vote_average<=review_avg*2):
                 recommend_list.append(movie)
 
+        recommend_list = sorted(recommend_list,key=attrgetter('vote_average'),reverse=True)
+        if len(recommend_list)>10:
+            new_list=[]
+            for new in recommend_list[10]:
+                new_list.append(new)
+            recommend_list = new_list
         serializer = MovieSerializer(recommend_list,many=True)
         return Response(serializer.data)
