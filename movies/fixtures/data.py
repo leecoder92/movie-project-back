@@ -41,7 +41,5 @@ for page in pages:
         data_dict.append(movie_data)
 
 
-
-
 with open("data.json", "w") as f:
     json.dump(data_dict, f)
