@@ -68,11 +68,8 @@ def recommend(request):
                 recommend_list.append(movie)
 
         recommend_list = sorted(recommend_list,key=attrgetter('vote_average'),reverse=True)
-        if len(recommend_list)>10:
-            new_list=[]
-            for new in recommend_list[10]:
-                new_list.append(new)
-            recommend_list = new_list
+        recommend_list= recommend_list[:10]
+
         serializer = MovieSerializer(recommend_list,many=True)
         return Response(serializer.data)
 
@@ -97,8 +94,8 @@ def recommendv2(request):
                 recommend_set.add(movie)
     for movie in recommend_set:
         recommend_list.append(movie)
-    recommend_list.sort(key=lambda movie: movie.vote_average, reverse=True)
+    recommend_list = sorted(recommend_list,key=attrgetter('vote_average'),reverse=True)
     recommend_list = recommend_list[:10]
-    
+
     serializer = MovieSerializer(recommend_list, many=True)
     return Response(serializer.data)
