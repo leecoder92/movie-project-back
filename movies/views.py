@@ -45,8 +45,9 @@ def delete_reviews(request, detail_id, review_id):
         return Response({'review_id':review_id},status=status.HTTP_204_NO_CONTENT
         )
 
+# =============================================================================================
 
-
+# 영화데이터 내의 평점과 사람들이 직접 남긴 평점의 평균을 비교, 직접 남긴 평점이 높은 영화들을 추천
 @api_view(['GET'])
 def recommend(request):
     if request.method == 'GET':
@@ -74,3 +75,30 @@ def recommend(request):
             recommend_list = new_list
         serializer = MovieSerializer(recommend_list,many=True)
         return Response(serializer.data)
+
+
+# 로그인한 사람이 평점을 4점 이상으로 남긴 영화들의 장르를 모아서 비슷한 장르의 영화를 추천
+@api_view(['GET'])
+def recommendv2(request):
+    genre_set = set()
+    movies = Movie.objects.all()
+    recommend_set = set()
+    recommend_list = []
+    reviews = request.user.review_set.all()
+    for review in reviews:
+        if review.rank >= 4:
+            movie = Movie.objects.filter(pk=review.movie_id)[0]
+            genres = movie.genres.all()
+            for genre in genres:
+                genre_set.add(genre)
+    for genre in genre_set:
+        for movie in movies:
+            if genre in movie.genres.all() and movie.vote_average >= 4:
+                recommend_set.add(movie)
+    for movie in recommend_set:
+        recommend_list.append(movie)
+    recommend_list.sort(key=lambda movie: movie.vote_average, reverse=True)
+    recommend_list = recommend_list[:10]
+    
+    serializer = MovieSerializer(recommend_list, many=True)
+    return Response(serializer.data)
