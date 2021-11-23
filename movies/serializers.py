@@ -18,7 +18,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         password = serializers.CharField(write_only=True)
         class Meta:
             model = get_user_model()
-            fields = ('username','password',)
+            fields = ('username','password', 'id')
 
     user = UserSerializer(read_only=True)
     movie = MovieSerializer(read_only=True)

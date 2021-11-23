@@ -16,6 +16,8 @@ def get_movies(request):
         serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data)
 
+# ================================================================        
+
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
 def get_reviews(request,detail_id):
@@ -34,11 +36,18 @@ def get_reviews(request,detail_id):
 
 
 @api_view(['DELETE'])
-def delete_reviews(request,detail_id,review_id):
+def delete_reviews(request, detail_id, review_id):
     if request.method == 'DELETE':
         review = get_object_or_404(Review,pk = review_id)
         review.delete()
         return Response({'review_id':review_id},status=status.HTTP_204_NO_CONTENT
         )
 
+# ================================================================================
 
+@api_view(['GET'])
+def get_my_reviews(request):
+    reviews = request.user.review_set.all()
+    if request.method == "GET":
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
