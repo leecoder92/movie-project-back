@@ -95,7 +95,7 @@ def recommendv2(request):
     for movie in recommend_set:
         recommend_list.append(movie)
     recommend_list = sorted(recommend_list,key=attrgetter('vote_average'),reverse=True)
-    recommend_list = recommend_list[:10]
+    recommend_list = recommend_list[:12]
 
     serializer = MovieSerializer(recommend_list, many=True)
     return Response(serializer.data)
