@@ -8,8 +8,6 @@ class ArticleSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'content', 'created_at', 'updated_at', 'user_id',)
 
 class CommentSerializer(serializers.ModelSerializer):
-    # article = ArticleSerializer(read_only=True)
-
     class Meta:
         model = Comment
-        fields = ('id', 'content', 'user_id', )
+        fields = ('id', 'content', 'user_id', 'created_at', 'updated_at', )
