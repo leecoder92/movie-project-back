@@ -17,6 +17,60 @@
 
 
 
+# 프로젝트 구현 정도(사진 첨부)
+
+### 홈 화면
+
+![home](README.assets/home.png)
+
+
+
+### 영화 디테일 및 평점
+
+![영화 디테일 및 평점 등록](README.assets/영화 디테일 및 평점 등록.png)
+
+
+
+### 영화 추천
+
+![추천](README.assets/추천.png)
+
+
+
+### 로그인
+
+![로그인](README.assets/로그인.png)
+
+
+
+### 회원가입
+
+![회원가입](README.assets/회원가입.png)
+
+
+
+### 커뮤니티
+
+![커뮤니티](README.assets/커뮤니티.png)
+
+
+
+### 커뮤니티 글 작성
+
+![커뮤니티 글 작성](README.assets/커뮤니티 글 작성.png)
+
+
+
+### 게시글 상세 및 댓글
+
+![게시글 상세 및 댓글](README.assets/게시글 상세 및 댓글.png)
+
+
+
+### 게시글 수정
+
+![게시글 수정](README.assets/게시글 수정.png)
+
 
 
 ## Project Log
